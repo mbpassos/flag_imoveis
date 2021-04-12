@@ -14,7 +14,7 @@ class OfferController extends Controller
      */
     public function index()
     {
-        //
+        return Offer::all();
     }
 
     /**
@@ -46,7 +46,7 @@ class OfferController extends Controller
      */
     public function show(Offer $offer)
     {
-        //
+       return $offer;
     }
 
     /**
@@ -80,6 +80,6 @@ class OfferController extends Controller
      */
     public function destroy(Offer $offer)
     {
-        //
+        return Offer::destroy($offer->id);
     }
 }

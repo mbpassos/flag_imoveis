@@ -46,6 +46,7 @@ class PropertyController extends Controller
      */
     public function show(Property $property)
     {
+        var_dump($property);
         return $property;
     }
 
@@ -80,6 +81,6 @@ class PropertyController extends Controller
      */
     public function destroy(Property $property)
     {
-        return Medico::destroy($property->id);
+        return Property::destroy($property->id);
     }
 }

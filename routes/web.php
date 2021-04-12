@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PropertyController;
+use App\Http\Controllers\OfferController;
+use App\Http\Controllers\AppointmentController;
 
 
 /*
@@ -26,3 +28,7 @@ Route::get('/dashboard', function () {
 require __DIR__.'/auth.php';
 
 Route::resource('/properties', PropertyController::class);
+
+Route::resource('/offers', OfferController::class);
+
+Route::resource('/appointments', AppointmentController::class);

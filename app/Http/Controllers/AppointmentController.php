@@ -14,7 +14,7 @@ class AppointmentController extends Controller
      */
     public function index()
     {
-        //
+       return Appointment::all();
     }
 
     /**
@@ -46,7 +46,7 @@ class AppointmentController extends Controller
      */
     public function show(Appointment $appointment)
     {
-        //
+      return $appointment;
     }
 
     /**
@@ -80,6 +80,6 @@ class AppointmentController extends Controller
      */
     public function destroy(Appointment $appointment)
     {
-        //
+        return Appointment::destroy($appointment->id);
     }
 }
