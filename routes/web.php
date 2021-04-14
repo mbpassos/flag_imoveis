@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PropertyController;
 use App\Http\Controllers\OfferController;
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
 
 
 /*
@@ -32,3 +34,7 @@ Route::resource('/properties', PropertyController::class);
 Route::resource('/offers', OfferController::class);
 
 Route::resource('/appointments', AppointmentController::class);
+
+Route::resource('/users', UserController::class);
+
+Route::resource('/roles', RoleController::class);
