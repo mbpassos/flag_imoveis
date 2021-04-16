@@ -36,7 +36,16 @@ class PropertyController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $inputData = $request->all();
+        $property = new Property();
+        $property->title = $inputData['title'];
+        $property->description = $inputData['description'];
+        $property->address = $inputData['address'];
+        $property->city = $inputData['city'];
+        $property->price = $inputData['price'];
+        $property->date = $inputData['date'];
+        $property->save();
+        return redirect()->route('properties.index')->with('message', 'New property added!');
     }
 
     /**
@@ -47,7 +56,7 @@ class PropertyController extends Controller
      */
     public function show(Property $property)
     {
-        return $property;        
+        return view('properties.view', ["property" => $property]);
     }
 
     /**
@@ -58,7 +67,7 @@ class PropertyController extends Controller
      */
     public function edit(Property $property)
     {
-        //
+        return view('properties.edit', ["property" => $property]);
     }
 
     /**
@@ -70,7 +79,16 @@ class PropertyController extends Controller
      */
     public function update(Request $request, Property $property)
     {
-        //
+        $inputData = $request->all();
+        $property->title = $inputData['title'];
+        $property->description = $inputData['description'];
+        $property->address = $inputData['address'];
+        $property->city = $inputData['city'];
+        $property->price = $inputData['price'];
+        $property->date = $inputData['date'];
+        $property->save();
+        return redirect()->route('properties.index')->with('message', 'Property updated successfully');
+
     }
 
     /**
@@ -81,6 +99,8 @@ class PropertyController extends Controller
      */
     public function destroy(Property $property)
     {
-        return Property::destroy($property->id);
+        Property::destroy($property->id);
+        return redirect()->route('properties.index')->with('message', 'Property deleted!');
+
     }
 }
