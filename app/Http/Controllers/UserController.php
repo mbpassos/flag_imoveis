@@ -14,9 +14,9 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {        
+    {
       $roles = Role::all();
-      return view('users/index', ['roles'=> $roles]); 
+      return view('users/index', ['roles'=> $roles]);
     }
 
     /**
@@ -26,7 +26,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view('users.create', ['roles'=> Role::all()]);
     }
 
     /**
@@ -37,51 +37,66 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $inputData = $request->all();
+        $user = new User();
+        $user->name = $inputData['name'];
+        $user->telephone = $inputData['telephone'];
+        $user->email = $inputData['email'];
+        $user->role_id = $request->get("role");
+        $user->save();
+        return redirect()->route('users.index')->with('message', 'New User added!');
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\User;
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(User $user)
     {
-        //
+        return view('users.view', ['user' => $user]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Models\User
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        //
+        return view('users.edit', ['user' => $user, 'roles' => Role::all()]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Models\User
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {
-        //
+        $inputData = $request->all();
+        $user->name = $inputData['name'];
+        $user->telephone = $inputData['telephone'];
+        $user->email = $inputData['email'];
+        $user->role_id = $request->get("role");
+        $user->save();
+        return redirect()->route('users.index')->with('message', 'User updated successfully!');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Models\User
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        //
+        User::destroy($user->id);
+        return redirect()->route('users.index')->with('message', 'User deleted!');
     }
 }
