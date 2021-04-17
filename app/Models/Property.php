@@ -9,7 +9,7 @@ class Property extends Model
 {
     use HasFactory;
 
-    public function users(){
-        return $this->belongsToMany(User::class, 'user_id');
+    public function user(){
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

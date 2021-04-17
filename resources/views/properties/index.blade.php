@@ -31,10 +31,9 @@
                         </thead>
                         <tbody>
                         @foreach($properties as $property)
-                            @foreach($property->users as $user)
                             <tr>
                                 <td>{{ $property->title }}</td>
-                                <td>{{ $user->name }}</td>
+                                <td>{{ $property->user->name ?? '' }}</td>
                                 <td>{{ $property->photo }}</td>
                                 <td>{{ $property->price }}</td>
                                 <td>{{ $property->address }}</td>
@@ -50,7 +49,6 @@
                                     </form>
                                 </td>
                             </tr>
-                            @endforeach
                         @endforeach
                         </tbody>
                     </table>
