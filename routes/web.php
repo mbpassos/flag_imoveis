@@ -6,6 +6,7 @@ use App\Http\Controllers\OfferController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PublicAccess;
 
 
 /*
@@ -38,3 +39,5 @@ Route::resource('/appointments', AppointmentController::class);
 Route::resource('/users', UserController::class);
 
 Route::resource('/roles', RoleController::class);
+
+Route::resource('/home', PublicAccess::class);
