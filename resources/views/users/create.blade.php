@@ -48,8 +48,8 @@
 
                                 <div class="col-md-6">
                                     <select class="custom-select" name="role">
-                                        @foreach ($roles as $role)
-                                            <option value="{{ $role->id }}"> {{$role->name}} </option>
+                                        @foreach ($users as $user)
+                                            <option value="{{ $user->id }}"> {{$user->name}} </option>
                                         @endforeach
                                     </select>
 

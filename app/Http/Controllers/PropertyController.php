@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Property;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PropertyController extends Controller
@@ -25,7 +26,7 @@ class PropertyController extends Controller
      */
     public function create()
     {
-        return view('properties.create');
+        return view('properties.create', ['users' => User::all()]);
     }
 
     /**
@@ -36,9 +37,11 @@ class PropertyController extends Controller
      */
     public function store(Request $request)
     {
+        $this->saveFoto($request, "test_photo");
         $inputData = $request->all();
         $property = new Property();
         $property->title = $inputData['title'];
+        $property->user_id = $inputData['user'];
         $property->description = $inputData['description'];
         $property->address = $inputData['address'];
         $property->city = $inputData['city'];
@@ -46,6 +49,7 @@ class PropertyController extends Controller
         $property->date = $inputData['date'];
         $property->save();
         return redirect()->route('properties.index')->with('message', 'New property added!');
+
     }
 
     /**
@@ -67,7 +71,7 @@ class PropertyController extends Controller
      */
     public function edit(Property $property)
     {
-        return view('properties.edit', ["property" => $property]);
+        return view('properties.edit', ["property" => $property, 'users' => User::all()]);
     }
 
     /**
@@ -82,6 +86,7 @@ class PropertyController extends Controller
         $inputData = $request->all();
         $property->title = $inputData['title'];
         $property->description = $inputData['description'];
+        $property->user_id = $inputData['user'];
         $property->address = $inputData['address'];
         $property->city = $inputData['city'];
         $property->price = $inputData['price'];
@@ -103,4 +108,18 @@ class PropertyController extends Controller
         return redirect()->route('properties.index')->with('message', 'Property deleted!');
 
     }
+
+    private function saveFoto($request, $name)
+    {
+        if ($request->hasFile('photo')) {
+            if ($request->file('photo')->isValid()) {
+                $file = $request->file('photo');
+                $extension = $file->extension();
+                $file->storeAs('public', $name . "." . $extension);
+                return asset("storage/" . $name . "." . $extension);
+            }
+        }
+        return null;
+    }
+
 }

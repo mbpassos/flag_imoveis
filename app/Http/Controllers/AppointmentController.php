@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Appointment;
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\Property;
 
 class AppointmentController extends Controller
 {
@@ -14,7 +16,7 @@ class AppointmentController extends Controller
      */
     public function index()
     {
-       return Appointment::all();
+        return view('appointments.index', ['appointments' => Appointment::all()]);
     }
 
     /**
@@ -24,7 +26,7 @@ class AppointmentController extends Controller
      */
     public function create()
     {
-        //
+        return view('appointments.create', ['appointments' => Appointment::all(), 'users' => User::all(), 'properties' => Property::all()]);
     }
 
     /**
@@ -35,7 +37,13 @@ class AppointmentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $inputData = $request->all();
+        $appointment = new Appointment();
+        $appointment->property_id = $inputData['property'];
+        $appointment->user_id = $inputData['user'];
+        $appointment->information = $inputData['information'];
+        $appointment->save();
+        return redirect()->route('appointments.index')->with('message', 'New appointment made!');
     }
 
     /**
@@ -46,7 +54,7 @@ class AppointmentController extends Controller
      */
     public function show(Appointment $appointment)
     {
-      return $appointment;
+        return view('appointments.view', ["appointment" => $appointment]);
     }
 
     /**
@@ -57,7 +65,7 @@ class AppointmentController extends Controller
      */
     public function edit(Appointment $appointment)
     {
-        //
+        return view('appointments.edit', ["appointment" => $appointment, 'users' => User::all(), 'properties' => Property::all()]);
     }
 
     /**
@@ -69,7 +77,12 @@ class AppointmentController extends Controller
      */
     public function update(Request $request, Appointment $appointment)
     {
-        //
+        $inputData = $request->all();
+        $appointment->property_id = $inputData['property'];
+        $appointment->user_id = $inputData['user'];
+        $appointment->information = $inputData['information'];
+        $appointment->save();
+        return redirect()->route('appointments.index')->with('message', 'Appointment updated!');
     }
 
     /**
@@ -80,6 +93,7 @@ class AppointmentController extends Controller
      */
     public function destroy(Appointment $appointment)
     {
-        return Appointment::destroy($appointment->id);
+        Appointment::destroy($appointment->id);
+        return redirect()->route('appointments.index')->with('message', 'Appointment deleted!');
     }
 }

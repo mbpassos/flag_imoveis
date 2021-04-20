@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Offer;
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\Property;
+
 
 class OfferController extends Controller
 {
@@ -14,7 +17,9 @@ class OfferController extends Controller
      */
     public function index()
     {
-        return Offer::all();
+        //$properties = Property::all();
+        //$users = User::all();
+        return view('offers.index', ['offers' => Offer::all()]);
     }
 
     /**
@@ -24,7 +29,8 @@ class OfferController extends Controller
      */
     public function create()
     {
-        //
+        return view('offers.create',['offers' => Offer::all(), 'users' => User::all(), 'properties' => Property::all()]);
+
     }
 
     /**
@@ -35,7 +41,13 @@ class OfferController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $inputData = $request->all();
+        $offer = new Offer();
+        $offer->property_id = $inputData['property'];
+        $offer->user_id = $inputData['user'];
+        $offer->price = $inputData['price'];
+        $offer->save();
+        return redirect()->route('offers.index')->with('message', 'New offer made!');
     }
 
     /**
@@ -46,7 +58,7 @@ class OfferController extends Controller
      */
     public function show(Offer $offer)
     {
-       return $offer;
+       return view('offers.view', ["offer" => $offer]);
     }
 
     /**
@@ -57,7 +69,7 @@ class OfferController extends Controller
      */
     public function edit(Offer $offer)
     {
-        //
+        return view('offers.edit', ["offer" => $offer, 'users' => User::all(), 'properties' => Property::all()]);
     }
 
     /**
@@ -69,7 +81,15 @@ class OfferController extends Controller
      */
     public function update(Request $request, Offer $offer)
     {
-        //
+        $inputData = $request->all();
+        $offer->property_id = $inputData['property'];
+        $offer->user_id = $inputData['user'];
+        $offer->price = $inputData['price'];
+        $offer->save();
+        return redirect()->route('offers.index')->with('message', 'Offer updated successfuly!');
+
+
+
     }
 
     /**
@@ -80,6 +100,7 @@ class OfferController extends Controller
      */
     public function destroy(Offer $offer)
     {
-        return Offer::destroy($offer->id);
+        Offer::destroy($offer->id);
+        return redirect()->route('offers.index')->with('message', 'Offer deleted!');
     }
 }
