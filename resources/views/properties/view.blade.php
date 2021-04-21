@@ -31,6 +31,8 @@
                                 <td>{{ $property->address }}</td>
                                 <td>{{ $property->city }}</td>
                                 <td>{{ $property->description }}</td>
+                                <td>{{ $property->date }}</td>
+
                             </tr>
                         </tbody>
                     </table>

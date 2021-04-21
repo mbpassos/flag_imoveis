@@ -39,7 +39,7 @@
                                 <td>{{ $property->address }}</td>
                                 <td>{{ $property->city }}</td>
                                 <td>{{ $property->description }}</td>
-                                <td>{{ $property->description }}</td>
+                                <td>{{ $property->date }}</td>
                                 <td style="text-align: center; min-width:175px;">
                                     <a class="btn btn-small btn-success" href="{{ Route('properties.show', $property->id) }}"><i class="fa fa-eye"></i></a>
                                     <a class="btn btn-small btn-info" href="{{ Route('properties.edit', $property->id) }}"><i class="fa fa-edit"></i></a>

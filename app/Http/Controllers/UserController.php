@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Role;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
@@ -15,8 +16,10 @@ class UserController extends Controller
      */
     public function index()
     {
-      $roles = Role::all();
-      return view('users/index', ['roles'=> $roles]);
+        if (Gate::allows('adminRole')){
+            return view('users/index', ['roles' => Role::all()]);
+        } else return redirect('/home');
+
     }
 
     /**
