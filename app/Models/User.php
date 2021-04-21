@@ -50,5 +50,9 @@ class User extends Authenticatable
         return $this->hasMany(Appointment::class, 'user_id');
     }
 
+    public function offers() {
+        return $this->hasMany(Offer::class, 'user_id');
+    }
+
 
 }

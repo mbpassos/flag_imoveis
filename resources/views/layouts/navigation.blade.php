@@ -21,21 +21,28 @@
                         {{ __('Property') }}
                     </x-nav-link>
                 </div>
+                @can('adminRole')
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('users.index')" :active="request()->routeIs('users.index')">
                         {{ __('Users') }}
                     </x-nav-link>
                 </div>
+                @endcan
+                @cannot('clientRole')
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('offers.index')" :active="request()->routeIs('offers.index')">
                         {{ __('Offers') }}
                     </x-nav-link>
                 </div>
+                @endcannot
+                @cannot('clientRole')
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('appointments.index')" :active="request()->routeIs('appointments.index')">
                         {{ __('Appointments') }}
                     </x-nav-link>
                 </div>
+                @endcannot
+
             </div>
 
             <!-- Settings Dropdown -->

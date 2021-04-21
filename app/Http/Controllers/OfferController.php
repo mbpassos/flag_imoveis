@@ -56,7 +56,7 @@ class OfferController extends Controller
         $offer->user_id = $inputData['user'];
         $offer->price = $inputData['price'];
         $offer->save();
-        return redirect()->route('offers.index')->with('message', 'New offer made!');
+        return redirect('/')->with('message', 'New offer made!');
     }
 
     /**

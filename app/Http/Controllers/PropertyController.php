@@ -47,7 +47,6 @@ class PropertyController extends Controller
      */
     public function store(Request $request)
     {
-        $this->saveFoto($request, "test_photo");
         $inputData = $request->all();
         $property = new Property();
         $property->title = $inputData['title'];
@@ -57,9 +56,18 @@ class PropertyController extends Controller
         $property->city = $inputData['city'];
         $property->price = $inputData['price'];
         $property->date = $inputData['date'];
+        if ($request->hasFile('photo')) {
+            $file = $request->file('photo');
+            $extension = $file->extension();
+            $filename = time() . '.' . $extension;
+            $file->storeAs('public', $filename);
+            $property->photo = $filename;
+        } else {
+            return $request;
+            $property->photo = '';
+        };
         $property->save();
         return redirect()->route('properties.index')->with('message', 'New property added!');
-
     }
 
     /**
@@ -122,20 +130,16 @@ class PropertyController extends Controller
             return redirect()->route('properties.index')->with('message', 'Property deleted!');
         } else return redirect('/properties')->with('message', 'Acess denied!');
 
-
     }
 
-    private function saveFoto($request, $name)
-    {
-        if ($request->hasFile('photo')) {
-            if ($request->file('photo')->isValid()) {
-                $file = $request->file('photo');
-                $extension = $file->extension();
-                $file->storeAs('public', $name . "." . $extension);
-                return asset("storage/" . $name . "." . $extension);
-            }
-        }
-        return null;
-    }
+
+
+
+
+
+
+
+
+
 
 }

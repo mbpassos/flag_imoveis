@@ -37,3 +37,7 @@ Route::resource('/users', UserController::class);
 Route::resource('/roles', RoleController::class);
 
 Route::resource('/', PublicAccess::class);
+
+Route::get('/about', function() {
+    return view('publicacess.about');
+});

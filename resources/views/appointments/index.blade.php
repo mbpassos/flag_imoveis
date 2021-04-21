@@ -18,7 +18,9 @@
                                 <td>Client</td>
                                 <td>Property</td>
                                 <td>Date</td>
+                                @can('agentRole')
                                 <td>Action</td>
+                                @endcan
                             </tr>
                         </thead>
                         <tbody>
@@ -27,6 +29,7 @@
                                 <td>{{ $appointment->user->name }}</td>
                                 <td>{{ $appointment->property->title }}</td>
                                 <td> Date </td>
+                                @can('agentRole')
                                 <td style="text-align: center; min-width:175px;">
                                     <a class="btn btn-small btn-success" href="{{ Route('appointments.show', $appointment->id) }}"><i class="fa fa-eye"></i></a>
                                     <a class="btn btn-small btn-info" href="{{ Route('appointments.edit', $appointment->id) }}"><i class="fa fa-edit"></i></a>
@@ -35,6 +38,7 @@
                                         <button type="submit" class="btn btn-small btn-danger"><i class="fa fa-times"></i></button>
                                     </form>
                                 </td>
+                                @endcan
                             </tr>
                         @endforeach
                         </tbody>
