@@ -21,7 +21,11 @@
         </style>
     </head>
     <body class="antialiased">
+        @if (Session::has('message'))
+                <div class="alert alert-info">{{ Session::get('message') }}</div>
+        @endif
         <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
+
             @if (Route::has('login'))
                 <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
                     @auth
@@ -50,8 +54,9 @@
                         <li class="list-group-item">{{ $property->price }}</li>
                     </ul>
                     <div class="card-body">
-                        <a href="#" class="card-link">Card link</a>
-                        <a href="#" class="card-link">Another link</a>
+                        <div class="col-lg-6 pull-right">
+                        <a class="btn btn-success" href="{{ Route('properties.show', $property->id) }}" title="New Offer"> Make an offer! </a>
+                        </div>
                     </div>
                 </div>
                @endforeach

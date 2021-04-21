@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +22,7 @@ class UserController extends Controller
     {
         if (Gate::allows('adminRole')){
             return view('users/index', ['roles' => Role::all()]);
-        } else return redirect('/home');
+        } else return redirect('/')->with('message', 'Acess denied!');
 
     }
 
@@ -29,7 +33,10 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('users.create', ['roles'=> Role::all()]);
+        if (Gate::allows('adminRole')){
+            return view('users.create', ['roles' => Role::all()]);
+        } else return redirect('/')->with('message', 'Acess denied!');
+
     }
 
     /**
@@ -59,7 +66,10 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return view('users.view', ['user' => $user]);
+        if (Gate::allows('adminRole')){
+            return view('users.view', ['user' => $user]);
+        } else return redirect('/')->with('message', 'Acess denied!');
+
     }
 
     /**
@@ -70,7 +80,10 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        return view('users.edit', ['user' => $user, 'roles' => Role::all()]);
+        if (Gate::allows('adminRole')){
+            return view('users.edit', ['user' => $user, 'roles' => Role::all()]);
+        } else return redirect('/')->with('message', 'Acess denied!');
+
     }
 
     /**
@@ -99,7 +112,10 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        User::destroy($user->id);
-        return redirect()->route('users.index')->with('message', 'User deleted!');
+        if (Gate::allows('adminRole')){
+            User::destroy($user->id);
+            return redirect()->route('users.index')->with('message', 'User deleted!');
+        } else return redirect('/')->with('message', 'Acess denied!');
+
     }
 }

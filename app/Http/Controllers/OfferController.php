@@ -6,10 +6,15 @@ use App\Models\Offer;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Property;
+use Illuminate\Support\Facades\Gate;
 
 
 class OfferController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -17,9 +22,10 @@ class OfferController extends Controller
      */
     public function index()
     {
-        //$properties = Property::all();
-        //$users = User::all();
-        return view('offers.index', ['offers' => Offer::all()]);
+        if (!(Gate::allows('clientRole'))){
+            return view('offers.index', ['offers' => Offer::all()]);
+        } else return redirect('/');
+
     }
 
     /**
@@ -29,7 +35,10 @@ class OfferController extends Controller
      */
     public function create()
     {
-        return view('offers.create',['offers' => Offer::all(), 'users' => User::all(), 'properties' => Property::all()]);
+        if (Gate::allows('clientRole')){
+            return view('offers.create', ['offers' => Offer::all(), 'users' => User::all(), 'properties' => Property::all()]);
+        } else return redirect('/offers')->with('message', 'Acess denied!');
+
 
     }
 
@@ -69,7 +78,10 @@ class OfferController extends Controller
      */
     public function edit(Offer $offer)
     {
-        return view('offers.edit', ["offer" => $offer, 'users' => User::all(), 'properties' => Property::all()]);
+        if (Gate::allows('clientRole')){
+            return view('offers.edit', ["offer" => $offer, 'users' => User::all(), 'properties' => Property::all()]);
+        } else return redirect('/offers')->with('message', 'Acess denied!');
+
     }
 
     /**
@@ -100,7 +112,10 @@ class OfferController extends Controller
      */
     public function destroy(Offer $offer)
     {
-        Offer::destroy($offer->id);
-        return redirect()->route('offers.index')->with('message', 'Offer deleted!');
+        if (Gate::allows('agentRole')){
+            Offer::destroy($offer->id);
+            return redirect()->route('offers.index')->with('message', 'Offer deleted!');
+        } else return redirect('/offers')->with('message', 'Acess denied!');
+
     }
 }

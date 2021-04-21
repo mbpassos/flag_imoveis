@@ -6,9 +6,16 @@ use App\Models\Appointment;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Property;
+use Illuminate\Support\Facades\Gate;
 
 class AppointmentController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +23,10 @@ class AppointmentController extends Controller
      */
     public function index()
     {
-        return view('appointments.index', ['appointments' => Appointment::all()]);
+        if (!(Gate::allows('clientRole'))){
+            return view('appointments.index', ['appointments' => Appointment::all()]);
+        } else return redirect('/');
+
     }
 
     /**
@@ -26,7 +36,10 @@ class AppointmentController extends Controller
      */
     public function create()
     {
-        return view('appointments.create', ['appointments' => Appointment::all(), 'users' => User::all(), 'properties' => Property::all()]);
+        if (Gate::allows('clientRole')) {
+            return view('appointments.create', ['appointments' => Appointment::all(), 'users' => User::all(), 'properties' => Property::all()]);
+        } else return redirect('/appointments')->with('message', 'Acess denied!');
+
     }
 
     /**
@@ -43,7 +56,7 @@ class AppointmentController extends Controller
         $appointment->user_id = $inputData['user'];
         $appointment->information = $inputData['information'];
         $appointment->save();
-        return redirect()->route('appointments.index')->with('message', 'New appointment made!');
+        return redirect('/')->with('message', 'New appointment made!');
     }
 
     /**
@@ -65,7 +78,10 @@ class AppointmentController extends Controller
      */
     public function edit(Appointment $appointment)
     {
-        return view('appointments.edit', ["appointment" => $appointment, 'users' => User::all(), 'properties' => Property::all()]);
+        if (Gate::allows('agentRole')){
+            return view('appointments.edit', ["appointment" => $appointment, 'users' => User::all(), 'properties' => Property::all()]);
+        } else return redirect('/appointments')->with('message', 'Acess denied!');
+
     }
 
     /**
@@ -93,7 +109,10 @@ class AppointmentController extends Controller
      */
     public function destroy(Appointment $appointment)
     {
-        Appointment::destroy($appointment->id);
-        return redirect()->route('appointments.index')->with('message', 'Appointment deleted!');
+        if (Gate::allows('agentRole')){
+            Appointment::destroy($appointment->id);
+            return redirect()->route('appointments.index')->with('message', 'Appointment deleted!');
+        } else return redirect('/appointments')->with('message', 'Acess denied!');
+
     }
 }

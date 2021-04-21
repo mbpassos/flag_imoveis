@@ -5,9 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Property;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class PropertyController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,8 +20,10 @@ class PropertyController extends Controller
      */
     public function index()
     {
+        if (!(Gate::allows('clientRole'))) {
         $properties = Property::all();
         return view('properties.index', ['properties' => $properties]);
+        } else return redirect('/');
     }
 
     /**
@@ -26,7 +33,10 @@ class PropertyController extends Controller
      */
     public function create()
     {
-        return view('properties.create', ['users' => User::all()]);
+        if (Gate::allows('agentRole')){
+            return view('properties.create', ['users' => User::all()]);
+        } else return redirect('/properties')->with('message', 'Acess denied!');
+
     }
 
     /**
@@ -71,7 +81,10 @@ class PropertyController extends Controller
      */
     public function edit(Property $property)
     {
-        return view('properties.edit', ["property" => $property, 'users' => User::all()]);
+        if (Gate::allows('agentRole')){
+            return view('properties.edit', ["property" => $property, 'users' => User::all()]);
+        } else return redirect('/properties')->with('message', 'Acess denied!');
+
     }
 
     /**
@@ -104,8 +117,11 @@ class PropertyController extends Controller
      */
     public function destroy(Property $property)
     {
-        Property::destroy($property->id);
-        return redirect()->route('properties.index')->with('message', 'Property deleted!');
+        if (Gate::allows('agentRole')){
+            Property::destroy($property->id);
+            return redirect()->route('properties.index')->with('message', 'Property deleted!');
+        } else return redirect('/properties')->with('message', 'Acess denied!');
+
 
     }
 

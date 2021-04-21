@@ -20,10 +20,6 @@ use App\Http\Controllers\PublicAccess;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
@@ -40,4 +36,4 @@ Route::resource('/users', UserController::class);
 
 Route::resource('/roles', RoleController::class);
 
-Route::resource('/home', PublicAccess::class);
+Route::resource('/', PublicAccess::class);
