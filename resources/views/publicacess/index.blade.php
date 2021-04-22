@@ -46,7 +46,7 @@
                 <a href="/about" class="text-sm text-gray-700 underline">About bla</a>
                @foreach($properties as $property)
                <div class="card" style="width: 18rem;">
-                    <img class="card-img-top" src="{{ asset('public/' . $property->photo) }}" alt="Card image cap">
+                    <img class="card-img-top" src="{{ $property->photo }}" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">{{ $property->title }}</h5>
                         <p class="card-text">{{ $property->description }}</p>

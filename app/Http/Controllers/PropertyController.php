@@ -56,16 +56,7 @@ class PropertyController extends Controller
         $property->city = $inputData['city'];
         $property->price = $inputData['price'];
         $property->date = $inputData['date'];
-        if ($request->hasFile('photo')) {
-            $file = $request->file('photo');
-            $extension = $file->extension();
-            $filename = time() . '.' . $extension;
-            $file->storeAs('public', $filename);
-            $property->photo = $filename;
-        } else {
-            return $request;
-            $property->photo = '';
-        };
+        $property->photo = $this->saveFoto($request, uniqid());
         $property->save();
         return redirect()->route('properties.index')->with('message', 'New property added!');
     }
@@ -104,14 +95,15 @@ class PropertyController extends Controller
      */
     public function update(Request $request, Property $property)
     {
-        $inputData = $request->all();
-        $property->title = $inputData['title'];
-        $property->description = $inputData['description'];
-        $property->user_id = $inputData['user'];
-        $property->address = $inputData['address'];
-        $property->city = $inputData['city'];
-        $property->price = $inputData['price'];
-        $property->date = $inputData['date'];
+
+        $property->title = $request->get('title');
+        $property->description = $request->get('description');
+        $property->user_id = $request->get('user');
+        $property->address = $request->get('address');
+        $property->city = $request->get('city');
+        $property->price = $request->get('price');
+        $property->date = $request->get('date');
+        $property->photo = $this->saveFoto($request, uniqid());
         $property->save();
         return redirect()->route('properties.index')->with('message', 'Property updated successfully');
 
@@ -132,13 +124,20 @@ class PropertyController extends Controller
 
     }
 
+    private function saveFoto($request, $name)
+    {
+        if ($request->hasFile('photo')) {
+            if ($request->file('photo')->isValid()) {
+                $file = $request->file('photo');
+                $extension = $file->extension();
+                $file->storeAs('public', $name . "." . $extension);
+                return asset("storage/" . $name . "." . $extension);
+            }
 
+        }
+        return null;
 
-
-
-
-
-
+    }
 
 
 
