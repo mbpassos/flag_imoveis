@@ -40,7 +40,8 @@
                                     </span>
                                 @enderror
                             </div>
-                            <div class="form-group row">
+                        </div>
+                        <div class="form-group row">
                             <label for="information" class="col-md-4 col-form-label text-md-right">{{ __('Information') }}</label>
                             <div class="col-md-6">
                                 <input type="text" class="form-control @error('information') is-invalid @enderror" id="information" name="information" placeholder="Information about the appointment" value="{{ old('information') }}" required autocomplete="information" autofocus>

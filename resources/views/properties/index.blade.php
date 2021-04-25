@@ -20,9 +20,9 @@
                     <table class="table table-striped table-bordered">
                         <thead>
                             <tr>
+                                <td>Photo</td>
                                 <td>Title</td>
                                 <td>Agent</td>
-                                <td>Photo</td>
                                 <td>Price</td>
                                 <td>Address</td>
                                 <td>City</td>
@@ -35,9 +35,9 @@
                         <tbody>
                         @foreach($properties as $property)
                             <tr>
+                                <td> <img src="{{ $property->photo ?? ''}}" height="100px" width="100px" border-radius = "50%"></td>
                                 <td>{{ $property->title }}</td>
                                 <td>{{ $property->user->name ?? '' }}</td>
-                                <td>{{ $property->photo }}</td>
                                 <td>{{ $property->price }}</td>
                                 <td>{{ $property->address }}</td>
                                 <td>{{ $property->city }}</td>

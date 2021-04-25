@@ -18,7 +18,7 @@
                                             <div class="col-sm-6" >
                                                 <img src="{{ $property->photo }}" alt="">
                                             </div>
-                                            <div class="col-sm-6 col-md-7">
+                                            <div class="col-sm-6">
                                                 <h4><strong>{{ $property->title }}</strong></h4>
                                                 <h5>{{ $property->user->name ?? '' }}</h5>
                                                 <hr>
@@ -26,19 +26,19 @@
                                                     {{ $property->description }}<br>
                                                     <small><cite title="San Francisco, USA">{{ $property->address }} - {{ $property->city }} - {{ $property->price }}</cite></small>
                                                 </p>
+                                                @can("clientRole")
+                                                <div>
+                                                <a class="btn btn-light" href="{{ Route('offers.create') }}" title="New Offer"> Make an offer! </a>
+                                                <a class="btn btn-light" href="{{ Route('appointments.create') }}" title="New Appointment"> Make an Appointment!</a>
+                                                @endcan
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 @can("clientRole")
-                                <div class="col-lg-6 pull-right">
+                                <div class="col-lg-6 pull-right mt-2">
                                     <a class="btn btn-success" href="" title=""> Add to Wishlist!</a>
-                                </div>
-                                <div class="col-lg-6 pull-right">
-                                     <a class="btn btn-success" href="{{ Route('offers.create') }}" title="New Offer"> Make an offer! </a>
-                                </div>
-                                <div class="col-lg-6 pull-right">
-                                    <a class="btn btn-success" href="{{ Route('appointments.create') }}" title="New Appointment"> Make an Appointment!</a>
                                 </div>
                                 @endcan
                             </div>
