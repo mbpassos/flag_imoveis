@@ -30,6 +30,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                @can("clientRole")
                                 <div class="col-lg-6 pull-right">
                                     <a class="btn btn-success" href="" title=""> Add to Wishlist!</a>
                                 </div>
@@ -39,6 +40,7 @@
                                 <div class="col-lg-6 pull-right">
                                     <a class="btn btn-success" href="{{ Route('appointments.create') }}" title="New Appointment"> Make an Appointment!</a>
                                 </div>
+                                @endcan
                             </div>
                         </div>
                     </div>

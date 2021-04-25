@@ -90,17 +90,11 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <label for="role" class="col-md-4 col-form-label text-md-right">{{ __('User') }}</label>
-
+                            <label for="user" class="col-md-4 col-form-label text-md-right">{{ __('User') }}</label>
                             <div class="col-md-6">
-                                <select class="custom-select" name="user">
-                                    @foreach ($users as $user)
-                                    <option value="{{ $user->id }}"> {{$user->name}} </option>
-                                    @endforeach
-                                </select>
-
-                                @error('role')
-                                     <span class="invalid-feedback" role="alert">
+                                <input id="user" type="text" class="form-control @error('user') is-invalid @enderror" name="user"  placeholder="300000" value="{{ old('user', auth()->user()->name) }}" required autocomplete="price">
+                                @error('user')
+                                    <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror

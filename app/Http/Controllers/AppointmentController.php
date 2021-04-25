@@ -53,7 +53,7 @@ class AppointmentController extends Controller
         $inputData = $request->all();
         $appointment = new Appointment();
         $appointment->property_id = $inputData['property'];
-        $appointment->user_id = $inputData['user'];
+        $appointment->user_id = auth()->user()->id;
         $appointment->information = $inputData['information'];
         $appointment->save();
         return redirect('/')->with('message', 'New appointment made!');
@@ -93,10 +93,9 @@ class AppointmentController extends Controller
      */
     public function update(Request $request, Appointment $appointment)
     {
-        $inputData = $request->all();
-        $appointment->property_id = $inputData['property'];
-        $appointment->user_id = $inputData['user'];
-        $appointment->information = $inputData['information'];
+        $appointment->property_id = $request->get('property');
+        $appointment->user_id = auth()->user()->id;
+        $appointment->information = $request->get('information');
         $appointment->save();
         return redirect()->route('appointments.index')->with('message', 'Appointment updated!');
     }
@@ -115,4 +114,5 @@ class AppointmentController extends Controller
         } else return redirect('/appointments')->with('message', 'Acess denied!');
 
     }
+
 }

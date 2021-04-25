@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Property;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Validator;
 
 
 class OfferController extends Controller
@@ -50,10 +51,16 @@ class OfferController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = $this->validateInputs($request);
+
+        if ($validator->fails()) {
+            return redirect()->route('offers.index')->withErrors($validator->errors());
+        }
+
         $inputData = $request->all();
         $offer = new Offer();
         $offer->property_id = $inputData['property'];
-        $offer->user_id = $inputData['user'];
+        $offer->user_id = auth()->user()->id;
         $offer->price = $inputData['price'];
         $offer->save();
         return redirect('/')->with('message', 'New offer made!');
@@ -93,14 +100,17 @@ class OfferController extends Controller
      */
     public function update(Request $request, Offer $offer)
     {
-        $inputData = $request->all();
-        $offer->property_id = $inputData['property'];
-        $offer->user_id = $inputData['user'];
-        $offer->price = $inputData['price'];
+        $validator = $this->validateInputs($request);
+
+        if ($validator->fails()) {
+            return redirect()->route('offers.edit', $offer->id)->withErrors($validator->errors());
+        }
+
+        $offer->property_id = $request->get('property');
+        $offer->user_id = auth()->user()->id;
+        $offer->price = $request->get('price');
         $offer->save();
         return redirect()->route('offers.index')->with('message', 'Offer updated successfuly!');
-
-
 
     }
 
@@ -118,4 +128,19 @@ class OfferController extends Controller
         } else return redirect('/offers')->with('message', 'Acess denied!');
 
     }
+
+    private function validateInputs(Request $request)
+    {
+        $rules = array(
+            'property' => 'required',
+            'price' => 'required|numeric'
+        );
+
+        return Validator::make($request->all(), $rules);
+    }
+
+
+
+
+
 }

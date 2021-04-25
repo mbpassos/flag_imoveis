@@ -6,6 +6,7 @@ use App\Models\Property;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Validator;
 
 class PropertyController extends Controller
 {
@@ -47,10 +48,16 @@ class PropertyController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = $this->validateInputs($request);
+
+        if ($validator->fails()) {
+            return redirect()->route('properties.index')->withErrors($validator->errors());
+        }
+
         $inputData = $request->all();
         $property = new Property();
         $property->title = $inputData['title'];
-        $property->user_id = $inputData['user'];
+        $property->user_id = auth()->user()->id;
         $property->description = $inputData['description'];
         $property->address = $inputData['address'];
         $property->city = $inputData['city'];
@@ -95,6 +102,11 @@ class PropertyController extends Controller
      */
     public function update(Request $request, Property $property)
     {
+        $validator = $this->validateInputs($request);
+
+        if ($validator->fails()) {
+            return redirect()->route('properties.edit', $property->id)->withErrors($validator->errors());
+        }
 
         $property->title = $request->get('title');
         $property->description = $request->get('description');
@@ -136,9 +148,19 @@ class PropertyController extends Controller
 
         }
         return null;
-
     }
 
+    private function validateInputs(Request $request)
+    {
+        $rules = array(
+            'title' => 'required',
+            'address' => 'required',
+            'city' => 'required',
+            'price' => 'required|numeric',
+        );
+
+        return Validator::make($request->all(), $rules);
+    }
 
 
 }

@@ -17,7 +17,7 @@
                                         <div class="row">
                                             <div class="col-sm-6 col-md-7">
                                                 <h4><strong>{{ $appointment->property->title }}</strong></h4>
-                                                <h5>{{ $appointment->user->name ?? '' }}</h5>
+                                                <h5>{{ $appointment->user->name ?? '' }} - {{ $appointment->user->telephone ?? ''}}</h5>
                                                 <hr>
                                                 <p>
                                                     {{ $appointment->information }}<br>
