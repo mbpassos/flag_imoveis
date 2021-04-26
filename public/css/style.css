@@ -1,0 +1,83 @@
+/*Cores*/
+
+:root {
+    --color-primary:#2289FF;
+    --color-secondary:#314862 !important;
+    --color-acent:#193F6A;
+}
+
+/*Classes*/
+
+.bg-primary {
+    background-color:var(--color-primary);
+}
+
+.color-primary {
+    color:var(--color-primary);
+}
+
+.bg-secondary {
+    background-color:var(--color-secondary);
+}
+
+.color-secondary {
+    color:var(--color-secondary);
+}
+
+.bg-acent {
+    background-color:var(--color-acent);
+}
+
+.color-acent {
+    color:var(--color-acent);
+}
+
+/*Header*/
+
+header.header {
+    width: 100%;
+}
+
+.header nav.navbar {
+    box-shadow: none;
+    color:var(--color-secondary);
+}
+
+.header nav.navbar .navbar-brand {
+    font-weight: 700;
+    color:var(--color-secondary);
+    font-size: 20px;
+}
+
+.header nav.navbar .nav-link{
+    color:var(--color-secondary);
+    font-weight: 400;
+    padding: 10px 20px;
+}
+
+.header nav.navbar .nav-item {
+    margin: auto 5px;
+}
+
+.btn-theme {
+    box-shadow: none;
+    padding:5px 20px !important;
+    padding: 5px;
+    border:none;
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: capitalize;
+    background-color: var(--color-primary);
+    color:#ffffff;
+    border-radius: 30px 0px 30px 30px;
+    transition: 0.5s ease;
+}
+
+.btn-theme:hover {
+    background-color: var(--color-acent);
+}
+
+.link-btn{
+    color: #ffffff;
+    text-decoration: none;
+}
