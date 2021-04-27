@@ -73,35 +73,6 @@
         @if (Session::has('message'))
                 <div class="alert alert-info">{{ Session::get('message') }}</div>
         @endif
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         <!--
         <div>
             @if (Route::has('login'))
@@ -117,13 +88,10 @@
                     @endauth
                 </div>
             @endif-->
-
-
-
-
+        <div class="container-fluid">
            <div class="row">
-               <div class="card" style="width: 18rem;">
-                    @foreach($properties as $property)
+               @foreach($properties as $property)
+               <div class="col-md-4" style="width: 18rem;">
                     <img class="card-img-top" src="{{ $property->photo }}" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">{{ $property->title }}</h5>
@@ -139,9 +107,41 @@
                         <a class="btn btn-success" href="{{ Route('properties.show', $property->id) }}" title="New Offer"> Make an offer! </a>
                         </div>
                     </div>
-                    @endforeach
                 </div>
+                @endforeach
             </div>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

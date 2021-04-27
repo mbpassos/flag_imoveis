@@ -5,15 +5,19 @@ namespace App\Http\Controllers;
 use App\Models\Appointment;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Calendar;
+use App\Services\CalendarService;
 use App\Models\Property;
 use Illuminate\Support\Facades\Gate;
 
 class AppointmentController extends Controller
 {
 
+    private $service;
+
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->service = new CalendarService();
     }
 
     /**
@@ -22,10 +26,9 @@ class AppointmentController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
+
     {
-        if (!(Gate::allows('clientRole'))){
-            return view('appointments.index', ['appointments' => Appointment::all()]);
-        } else return redirect('/');
+        return view('appointments.index', ["calendar" => $this->service->getCalendar()]);
 
     }
 

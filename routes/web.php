@@ -7,6 +7,7 @@ use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PublicAccess;
+use App\Http\Controllers\CalendarController;
 
 
 /*
@@ -37,6 +38,8 @@ Route::resource('/users', UserController::class);
 Route::resource('/roles', RoleController::class);
 
 Route::resource('/', PublicAccess::class);
+
+Route::resource('/calendars', CalendarController::class);
 
 Route::get('/about', function() {
     return view('publicacess.about');
