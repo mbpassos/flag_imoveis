@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class PropertyController extends Controller
 {
@@ -22,7 +23,7 @@ class PropertyController extends Controller
     public function index()
     {
         if (!(Gate::allows('clientRole'))) {
-        $properties = Property::all();
+        $properties = Property::where('user_id', Auth::user()->id)->get();
         return view('properties.index', ['properties' => $properties]);
         } else return redirect('/');
     }

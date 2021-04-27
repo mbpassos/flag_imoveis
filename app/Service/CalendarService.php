@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services;
+namespace App\Service;
 
 use \App\Models\Calendar;
 use Illuminate\Support\Facades\Http;
@@ -8,9 +8,13 @@ use Illuminate\Support\Facades\Http;
 class CalendarService
 {
 
-    private $api_endpoint = "http://127.0.0.1:8001/api/agendamentos/";
+    private $api_endpoint = "http://127.0.0.1:8001/api/calendar/";
     private $api_token = "14365804cf744b81846af954f0d29734";
 
+    public function testeApi() {
+        $response = Http::get('http://127.0.0.1:8001/api/calendar');
+        dd(json_decode($response->body()));
+    }
 
     public function getCalendar()
     {

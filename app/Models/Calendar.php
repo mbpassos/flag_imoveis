@@ -19,7 +19,7 @@ class Calendar extends Model
     {
         $this->_id = $array['_id'] ?? 0;
         $this->date = $array['date'];
-        $this->date = $array['time'];
+        $this->time = $array['time'];
     }
 
     public function getId() : string
@@ -41,7 +41,7 @@ class Calendar extends Model
         return [
             "_id" => $this->_id,
             "date" => $this->date,
-            "date" => $this->time
+            "time" => $this->time
         ];
     }
 }
