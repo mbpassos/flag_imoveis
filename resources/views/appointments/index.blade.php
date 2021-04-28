@@ -18,6 +18,7 @@
                                 <td>Client</td>
                                 <td>Property</td>
                                 <td>Date</td>
+                                <td>Time</td>
                                 @can('agentRole')
                                 <td>Action</td>
                                 @endcan
@@ -25,10 +26,12 @@
                         </thead>
                         <tbody>
                         @foreach($appointments as $appointment)
-                            <tr>
+                            @foreach ($calendars as $calendar)
+                             <tr>
                                 <td>{{ $appointment->user->name }}</td>
                                 <td>{{ $appointment->property->title }}</td>
-                                <td> Date </td>
+                                <td> {{$calendar->getDate()}} </td>
+                                <td> {{$calendar->getTime()}} </td>
                                 @can('agentRole')
                                 <td style="text-align: center; min-width:175px;">
                                     <a class="btn btn-small btn-success" href="{{ Route('appointments.show', $appointment->id) }}"><i class="fa fa-eye"></i></a>
@@ -40,6 +43,7 @@
                                 </td>
                                 @endcan
                             </tr>
+                            @endforeach
                         @endforeach
                         </tbody>
                     </table>
