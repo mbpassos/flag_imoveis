@@ -73,26 +73,16 @@
         @if (Session::has('message'))
                 <div class="alert alert-info">{{ Session::get('message') }}</div>
         @endif
-        <!--
+        <div class="mainText"><h3 style="font-weight: 700">Find the property of your dreams <br>at <span style="color: #2289FF">Flag</span> Imóveis!</h3>
+        </div>
         <div>
-            @if (Route::has('login'))
-                <div>
-                    @auth
-                        <a href="{{ url('/dashboard') }}" class="text-sm text-gray-700 underline">Dashboard</a>
-                    @else
-                        <a href="{{ route('login') }}" class="text-sm text-gray-700 underline">Log in</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 underline">Register</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif-->
-        <div class="container-fluid">
+            <img class="d-block w-100" src="https://images.unsplash.com/photo-1497465689543-5940d3cede89?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80" alt="Third slide" height="400">
+        </div>
+        <div class="container-fluid" style="margin-top: 80px">
            <div class="row">
                @foreach($properties as $property)
                <div class="col-md-4" style="width: 18rem;">
-                    <img class="card-img-top" src="{{ $property->photo }}" alt="Card image cap">
+                    <img class="card-img-top" src="{{ $property->photo }}" alt="Card image cap" width="311" height="270">
                     <div class="card-body">
                         <h5 class="card-title">{{ $property->title }}</h5>
                         <p class="card-text">{{ $property->description }}</p>
@@ -103,77 +93,14 @@
                         <li class="list-group-item">{{ $property->price }}</li>
                     </ul>
                     <div class="card-body">
-                        <div class="col-lg-6 pull-right">
-                        <a class="btn btn-success" href="{{ Route('properties.show', $property->id) }}" title="New Offer"> Make an offer! </a>
+                        <div class="col-lg-8">
+                        <a class="btn-theme" href="{{ Route('properties.show', $property->id) }}" title="New Offer"> Make an offer! </a>
                         </div>
                     </div>
                 </div>
                 @endforeach
             </div>
         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        <!--<div class="container-fluid topmargin-lg">
-            <div class="row">
-                @foreach ($properties as $property)
-                <div class="col-md-4 topmargin-lg">
-                    <div class="hero-container-desktop">
-                        <div class="property-title">
-                            <span>{{$property->title}}</span>
-                            <h3>{{ $property->address}}</h3> <br>
-                            <h3>{{ $property->city}}</h3>
-                        </div>
-                        <div class="property-button">
-                            <h3>Valor: €{{ $property->price}}</h3>
-                            <a class="btn btn-small  btn-outline-light" href="{{ Route('properties.show', $property->id) }}">Veja mais</i></a>
-                        </div>
-                        <img src="{{asset($property->image)}}" class="img-fluid" alt="">
-                    </div>
-                </div>
-                @endforeach
-            </div>
-        </div>-->
-
-
-
-
-
-
-
-
     </body>
 </html>
 
