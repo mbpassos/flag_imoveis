@@ -28,7 +28,7 @@
                                                 </p>
                                                 @can("clientRole")
                                                 <div>
-                                                <a class="btn btn-light" href="{{ Route('offers.create') }}" title="New Offer"> Make an offer! </a>
+                                                <a class="btn btn-light" href="" title="New Offer"> Wishlist </a>
                                                 <a class="btn btn-light" href="{{ Route('appointments.create') }}" title="New Appointment"> Make an Appointment!</a>
                                                 @endcan
                                                 </div>
@@ -36,11 +36,26 @@
                                         </div>
                                     </div>
                                 </div>
-                                @can("clientRole")
-                                <div class="col-lg-6 pull-right mt-2">
-                                    <a class="btn btn-success" href="" title=""> Add to Wishlist!</a>
+                                <div style="margin-top: 50px">
+                                <form method="POST" action="{{ route('offers.store') }}">
+                                     @csrf
+                                    <input style="display: none" type="text" name="property_id" value="{{$property->id}}" >
+                                    <div class="form-group row">
+                                        <label for="price" class="col-md-4 col-form-label text-md-right">{{ __('Make offer:') }}</label>
+                                        <div class="col-md-6">
+                                            <input type="number" name="price" value="" placeholder="Insert amount here!">
+                                        </div>
+                                    </div>
+                                    <input style="display: none" type="text" name="user_id" value="{{auth()->user()->id}}">
+                                    <div class="form-group row mb-0">
+                                        <div class="col-md-6 offset-md-4">
+                                            <button type="submit" class="btn btn-primary">
+                                            {{ __('Submit Offer') }}
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
                                 </div>
-                                @endcan
                             </div>
                         </div>
                     </div>

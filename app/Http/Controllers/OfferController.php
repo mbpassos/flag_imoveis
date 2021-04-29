@@ -36,9 +36,9 @@ class OfferController extends Controller
      */
     public function create()
     {
-        if (Gate::allows('clientRole')){
-            return view('offers.create', ['offers' => Offer::all(), 'users' => User::all(), 'properties' => Property::all()]);
-        } else return redirect('/offers')->with('message', 'Acess denied!');
+        //if (Gate::allows('clientRole')){
+        //    return view('offers.create', ['offers' => Offer::all(), 'users' => User::all(), 'properties' => Property::all()]);
+        //} else return redirect('/offers')->with('message', 'Acess denied!');
 
 
     }
@@ -49,18 +49,18 @@ class OfferController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Offer $offer)
     {
         $validator = $this->validateInputs($request);
 
         if ($validator->fails()) {
-            return redirect()->route('offers.index')->withErrors($validator->errors());
+            return redirect()->route('offers.edit', $offer->id)->withErrors($validator->errors());
         }
 
         $inputData = $request->all();
-        $offer = new Offer();
-        $offer->property_id = $inputData['property'];
-        $offer->user_id = auth()->user()->id;
+
+        $offer->property_id = $inputData['property_id'];
+        $offer->user_id = $inputData['user_id'];
         $offer->price = $inputData['price'];
         $offer->save();
         return redirect('/')->with('message', 'New offer made!');
@@ -132,7 +132,7 @@ class OfferController extends Controller
     private function validateInputs(Request $request)
     {
         $rules = array(
-            'property' => 'required',
+
             'price' => 'required|numeric'
         );
 
