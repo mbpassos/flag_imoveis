@@ -32,8 +32,8 @@ class CreateUsersTable extends Migration
         Schema::table('appointments', function (Blueprint $table) {
             $table->integer('user_id');
             $table->foreignId('user_id')->nullable(true)->references('id')->on('users');
-        }); 
-        
+        });
+
         Schema::table('offers', function (Blueprint $table) {
             $table->integer('user_id');
             $table->foreignId('user_id')->nullable(true)->references('id')->on('users');

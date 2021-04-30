@@ -33,6 +33,13 @@
                     </x-nav-link>
                 </div>
                 @endcan
+                @can('clientRole')
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('wishlist.index')" :active="request()->routeIs('wishlist.index')">
+                        {{ __('Wishlist') }}
+                    </x-nav-link>
+                </div>
+                @endcan
                 @cannot('clientRole')
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('offers.index')" :active="request()->routeIs('offers.index')">

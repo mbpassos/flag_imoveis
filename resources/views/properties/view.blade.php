@@ -28,7 +28,13 @@
                                                 </p>
                                                 @can("clientRole")
                                                 <div>
-                                                <a class="btn btn-light" href="" title="New Offer"> Wishlist </a>
+                                                <form method="POST" action="{{ route('wishlist.store')}}">
+                                                    @csrf
+                                                    <input style="display: none" type="text" name="property_id" value="{{$property->id}}">
+                                                    <button type="submit" class="btn btn-primary">
+                                                    {{ __('Wishlist!') }}
+                                                    </button>
+                                                </form>
                                                 <a class="btn btn-light" href="{{ Route('appointments.create') }}" title="New Appointment"> Make an Appointment!</a>
                                                 @endcan
                                                 </div>

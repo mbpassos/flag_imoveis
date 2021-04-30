@@ -8,6 +8,7 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PublicAccess;
 use App\Http\Controllers\CalendarController;
+use App\Http\Controllers\Wishlistcontoller;
 
 
 /*
@@ -40,6 +41,9 @@ Route::resource('/roles', RoleController::class);
 Route::resource('/', PublicAccess::class);
 
 Route::resource('/calendars', CalendarController::class);
+
+Route::resource('/wishlist', Wishlistcontoller::class);
+
 
 Route::get('/about', function() {
     return view('publicacess.about');
