@@ -31,11 +31,11 @@
                                                 <form method="POST" action="{{ route('wishlist.store')}}">
                                                     @csrf
                                                     <input style="display: none" type="text" name="property_id" value="{{$property->id}}">
-                                                    <button type="submit" class="btn btn-primary">
-                                                    {{ __('Wishlist!') }}
+                                                    <button type="submit" class="btn btn-light">
+                                                    {{ __('Add to Wishlist!') }}
                                                     </button>
                                                 </form>
-                                                <a class="btn btn-light" href="{{ Route('appointments.create') }}" title="New Appointment"> Make an Appointment!</a>
+                                                <a class="btn btn-light mt-1" href="{{ Route('appointments.create') }}" title="New Appointment"> Make an Appointment!</a>
                                                 @endcan
                                                 </div>
                                             </div>
